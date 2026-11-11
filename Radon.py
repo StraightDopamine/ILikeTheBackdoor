@@ -17,6 +17,8 @@ client = discord.Client(intents=intents)
 async def on_message(message):
     if message.author == client.user:
         return
+
+	content = message.content.strip()
         
     if content == "!status":
         await message.channel.send("Online")
