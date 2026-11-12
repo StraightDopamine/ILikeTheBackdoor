@@ -18,7 +18,6 @@ async def on_message(message):
     if message.author == client.user:
         return
         
-    # used ai to reformat cuz I suck at it apprently
     content = message.content.strip()
 
     if content == "!status":
@@ -42,7 +41,7 @@ async def on_message(message):
             term_cmd = "bash"
         
         try:
-            env_cmd = f"export DISPLAY=:0 && gnome-terminal -- bash -c '{term_cmd}; exec bash'"
+            env_cmd = f"export DISPLAY=:0 && gnome-terminal --window -- bash -c '{term_cmd}; exec bash'"
             subprocess.run(env_cmd, shell=True)
             await message.channel.send("Terminal window spawned on desktop!")
         except Exception as e:
