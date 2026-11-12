@@ -18,7 +18,7 @@ async def on_message(message):
     if message.author == client.user:
         return
         
-    # FIX: Define 'content' so commands can be evaluated properly
+    # used ai to reformat cuz I suck at it apprently
     content = message.content.strip()
 
     if content == "!status":
