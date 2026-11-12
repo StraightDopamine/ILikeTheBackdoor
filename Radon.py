@@ -17,9 +17,10 @@ client = discord.Client(intents=intents)
 async def on_message(message):
     if message.author == client.user:
         return
+        
+    # FIX: Define 'content' so commands can be evaluated properly
+    content = message.content.strip()
 
-	content = message.content.strip()
-	
     if content == "!status":
         await message.channel.send("Online")
         return
@@ -35,7 +36,6 @@ async def on_message(message):
             await message.channel.send(f"Failed to take screenshot: {e}")
         return
         
-    # 3. Open a physical terminal window on the Debian desktop just added this for the aura tbh
     elif content.startswith("!terminal"):
         term_cmd = content.replace("!terminal", "", 1).strip()
         if not term_cmd:
@@ -48,7 +48,7 @@ async def on_message(message):
         except Exception as e:
             await message.channel.send(f"Could not open terminal: {e}")
         return
-	#fallback script basically execute anything without opening the terminal 
+
     elif content.startswith("!run "):
         command = content.replace("!run ", "", 1)
         result = subprocess.run(command, capture_output=True, shell=True, text=True)
