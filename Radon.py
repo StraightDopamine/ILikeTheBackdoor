@@ -17,8 +17,6 @@ client = discord.Client(intents=intents)
 async def on_message(message):
     if message.author == client.user:
         return
-
-	content = message.content.strip()
         
     if content == "!status":
         await message.channel.send("Online")
@@ -26,13 +24,15 @@ async def on_message(message):
 
     elif content == "!screenshot":
         try:
-            subprocess.run("scrot /tmp/screenshot.png", shell=True, check=True)
+            import mss
+            with mss.mss() as sct:
+                sct.shot(output="/tmp/screenshot.png")
             with open("/tmp/screenshot.png", "rb") as f:
                 await message.channel.send("Here is the current screen:", file=discord.File(f, "screenshot.png"))
         except Exception as e:
             await message.channel.send(f"Failed to take screenshot: {e}")
         return
-
+        
     # 3. Open a physical terminal window on the Debian desktop just added this for the aura tbh
     elif content.startswith("!terminal"):
         term_cmd = content.replace("!terminal", "", 1).strip()
