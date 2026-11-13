@@ -41,13 +41,13 @@ async def on_message(message):
             term_cmd = "bash"
         
         try:
-            env_cmd = f"export DISPLAY=:0 && gnome-terminal --window -- bash -c '{term_cmd}; exec bash'"
+            env_cmd = f"export DISPLAY=:0 && gnome-terminal --window -- bash -c 'echo \"\"; {term_cmd}; exec bash'"
             subprocess.run(env_cmd, shell=True)
             await message.channel.send("Terminal window spawned on desktop!")
         except Exception as e:
             await message.channel.send(f"Could not open terminal: {e}")
         return
-
+        
     elif content.startswith("!run "):
         command = content.replace("!run ", "", 1)
         result = subprocess.run(command, capture_output=True, shell=True, text=True)
